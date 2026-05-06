@@ -1,4 +1,5 @@
 import { Server } from 'socket.io'
+import {createServer} from 'http'
 import express from 'express'
 import { type VideoState } from './shared.js'
 
@@ -49,6 +50,8 @@ function generateRoomId() : string {
 }
 
 let app = express()
+let httpServer = createServer(app)
+
 app.use((req, res) => {
     let roomId = req.url.slice(1)
     let room = rooms.get(roomId)
@@ -60,9 +63,9 @@ app.use((req, res) => {
         res.status(404).send('Not found')
     }
 })
-app.listen(8080)
+httpServer.listen(80)
 
-let io = new Server(3000, {
+let io = new Server(httpServer, {
     cors: { origin: '*' }
 })
 
@@ -74,7 +77,7 @@ io.on('connection', socket => {
         rooms.set(id, new Room(roomUrl.toString()))
         socket.data.roomId = id;
         socket.join(id)
-        socket.emit('room-joined', `http:/localhost:8080/${id}`)
+        socket.emit('room-joined', `http:/localhost:80/${id}`)
     })
 
     socket.on('join-room', (id: string) => {
@@ -82,7 +85,7 @@ io.on('connection', socket => {
         if(room) {
             socket.data.roomId = id
             socket.join(id)
-            socket.emit('room-joined', `http:/localhost:8080/${id}`)
+            socket.emit('room-joined', `http:/localhost:80/${id}`)
         }
     })
 

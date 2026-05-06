@@ -13,7 +13,7 @@ let roomUrl : string = ''
 let synced : boolean = false;
 
 function connect(room?: string) {
-    socket = io('http://localhost:3000')
+    socket = io('http://localhost:80')
     socket.on('connect', () => {
         if(room) {
             socket?.emit('join-room', room)
