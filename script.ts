@@ -1,5 +1,11 @@
 import { io, Socket } from 'socket.io-client'
-import { type VideoState } from './shared'
+
+type VideoState = {
+    url: string,
+    playing: boolean,
+    time: number
+    rate: number
+};
 
 const roomSectionTemplate = `
     <div class='crunch-together-room-link'>

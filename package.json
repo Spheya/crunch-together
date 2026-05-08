@@ -13,22 +13,19 @@
   "author": "Spheya",
   "type": "module",
   "scripts": {
-    "build": "webpack && tsc",
-    "start": "node dist/server.js"
+    "build": "node ./build.config.mjs release",
+    "dev": "node ./build.config.mjs",
+    "server": "node ./build.config.mjs release && node ./dist/server.js"
   },
   "devDependencies": {
     "@types/express": "^5.0.6",
     "@types/node": "^25.6.0",
-    "@types/webextension-polyfill": "^0.12.5",
-    "copy-webpack-plugin": "^14.0.0",
-    "ts-loader": "^9.5.7",
-    "typescript": "^6.0.3",
-    "webpack-cli": "^7.0.2"
+    "esbuild": "^0.28.0",
+    "socket.io-client": "^4.8.3",
+    "typescript": "^6.0.3"
   },
   "dependencies": {
     "express": "^5.2.1",
-    "socket.io": "^4.8.3",
-    "socket.io-client": "^4.8.3",
-    "webextension-polyfill": "^0.12.0"
+    "socket.io": "^4.8.3"
   }
 }

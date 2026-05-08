@@ -1,7 +1,13 @@
 import { Server } from 'socket.io'
 import {createServer} from 'http'
 import express from 'express'
-import { type VideoState } from './shared.js'
+
+type VideoState = {
+    url: string,
+    playing: boolean,
+    time: number
+    rate: number
+};
 
 class Room {
     creationTime : number
