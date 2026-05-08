@@ -3,7 +3,6 @@
     "name": "Crunch Together",
 
     "permissions": [ "clipboardWrite" ],
-    "host_permissions": [ "http://localhost:3000" ],
 
     "content_scripts": [{
         "matches": [ "*://www.crunchyroll.com/*" ],
