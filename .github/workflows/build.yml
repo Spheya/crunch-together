@@ -1,0 +1,33 @@
+name: Build
+
+on:
+  push:
+    branches: [ main ]
+    tags: [ 'v*' ]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+
+      - name: Build Project
+        run: |
+          npm install
+          npm run build
+          zip -r crunch-together.zip dist/extension
+
+      - name: Create Release
+        if: github.event_name == 'push' && github.ref_type == 'tag'
+        uses: softprops/action-gh-release@v3
+        with:
+          tag_name: ${{ github.ref_name }}
+          name: "Crunch Together ${{ github.ref_name }}"
+          files: crunch-together.zip
+          draft: false
