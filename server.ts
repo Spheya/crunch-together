@@ -84,7 +84,7 @@ io.on('connection', socket => {
         rooms.set(id, new Room(roomUrl.toString()))
         socket.data.roomId = id;
         socket.join(id)
-        socket.emit('room-joined', hostUrl + id)
+        socket.emit('room-joined', hostUrl.url + id)
     })
 
     socket.on('join-room', (id: string) => {
@@ -92,7 +92,7 @@ io.on('connection', socket => {
         if(room) {
             socket.data.roomId = id
             socket.join(id)
-            socket.emit('room-joined', hostUrl + id)
+            socket.emit('room-joined', hostUrl.url + id)
         }
     })
 
