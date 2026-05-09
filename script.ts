@@ -1,4 +1,5 @@
 import { io, Socket } from 'socket.io-client'
+import hostUrl from './url.json' with { type: 'json' }
 
 type VideoState = {
     url: string,
@@ -22,7 +23,7 @@ let roomUrl : string = ''
 let skipEvent : { [index: string]: number } = {}
 
 function connect(room?: string) {
-    socket = io('https://crunch-together.onrender.com/')
+    socket = io(hostUrl.url)
     socket.on('connect', () => {
         console.log('[Crunch Together] connection opened')
         if(room) {

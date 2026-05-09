@@ -15,7 +15,7 @@
   "scripts": {
     "build": "node ./build.config.mjs release",
     "dev": "node ./build.config.mjs",
-    "server": "node ./build.config.mjs release && node ./dist/server.js"
+    "server": "node ./build.config.mjs release && node ./dist/server/server.js"
   },
   "devDependencies": {
     "@types/express": "^5.0.6",

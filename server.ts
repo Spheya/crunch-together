@@ -1,6 +1,7 @@
 import { Server } from 'socket.io'
 import {createServer} from 'http'
 import express from 'express'
+import hostUrl from './url.json' with { type: 'json' }
 
 type VideoState = {
     url: string,
@@ -83,7 +84,7 @@ io.on('connection', socket => {
         rooms.set(id, new Room(roomUrl.toString()))
         socket.data.roomId = id;
         socket.join(id)
-        socket.emit('room-joined', `https://crunch-together.onrender.com/${id}`)
+        socket.emit('room-joined', hostUrl + id)
     })
 
     socket.on('join-room', (id: string) => {
@@ -91,7 +92,7 @@ io.on('connection', socket => {
         if(room) {
             socket.data.roomId = id
             socket.join(id)
-            socket.emit('room-joined', `https://crunch-together.onrender.com/${id}`)
+            socket.emit('room-joined', hostUrl + id)
         }
     })
 

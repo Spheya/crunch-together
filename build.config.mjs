@@ -11,6 +11,7 @@ const extension = await esbuild.context({
         setup(build) {
             build.onEnd(async() => {
                 await fs.cp('style.css', 'dist/extension/style.css')
+                await fs.cp('url.json', 'dist/server/url.json')
 
                 manifest.version = pkg.version
                 await fs.writeFile('dist/extension/manifest.json', JSON.stringify(manifest, null, 2))
@@ -26,7 +27,7 @@ const extension = await esbuild.context({
 
 const server = await esbuild.context({
     entryPoints: ['server.ts'],
-    outfile: 'dist/server.js',
+    outfile: 'dist/server/server.js',
     bundle: false,
     minify: release
 })
