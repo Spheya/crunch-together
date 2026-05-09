@@ -24,9 +24,14 @@ jobs:
         run: |
           npm install
           npm run build
-          zip -r crunch-together.zip dist/extension
 
-      - name: Create Release
+      - name: Package
+        if: github.event_name == 'push' && github.ref_type == 'tag'
+        run: |
+          cd dist/extension
+          zip -r ../../crunch-together.zip .
+
+      - name: Publish Release
         if: github.event_name == 'push' && github.ref_type == 'tag'
         uses: softprops/action-gh-release@v3
         with:
@@ -34,3 +39,17 @@ jobs:
           name: "Crunch Together ${{ github.ref_name }}"
           files: crunch-together.zip
           draft: false
+          body: |
+            ## Installation
+
+            ### Chrome
+            1. Download the crunch-together zip file and extract its contents
+            2. Navigate to chrome://extensions
+            3. Enable developer mode by clicking the toggle in the top right corner
+            4. Click the "Load Unpacked" button and select the files you extracted from the zip
+
+            ### Firefox
+            1. Download the crunch-together zip file and extract its contents
+            2. Navigate to about:debugging#/runtime/this-firefox
+            3. Click on "Load Temporary Add-on..."
+            4. Select any of the files you extracted from the zip
